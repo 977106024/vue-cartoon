@@ -3,6 +3,7 @@
       <svg class="icon camera" aria-hidden="true">
         <use xlink:href="#icon-xiangji"></use>
      </svg>
+     <input type="file" accept="image/*" @change="uploadImg">
   </div>
 </template>
 
@@ -11,6 +12,11 @@ export default {
   name: 'uploadPhoto',
   props: {
     msg: String
+  },
+  methods:{
+    uploadImg(){
+      console.log('111')
+    }
   }
 }
 </script>
@@ -18,7 +24,17 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .uploadPhoto{
-  padding-top: 10vh;
+  // padding-top: 10vh;
+  position: relative;
+  input[type=file]{
+    width: 4em;
+    height: 4em;
+    position: absolute;
+    top: 10.5vh;
+    left: 50%;
+    transform:translateX(-50%);
+    opacity: 0;
+  }
 }
 a {
   color: #42b983;
@@ -26,6 +42,10 @@ a {
 .camera{
   width: 4em;
   height: 4em;
+  position: absolute;
+  top: 10vh;
+  left: 50%;
+  transform:translateX(-50%);
 }
 
 </style>

@@ -8,14 +8,23 @@
 </template>
 
 <script>
+import {upload} from '@/service/getData'
 export default {
   name: 'uploadPhoto',
   props: {
     msg: String
   },
+  created(){
+     const data = {image:'xxxx'}
+      upload(data)
+  },
   methods:{
     uploadImg(){
       console.log('111')
+      const data = {image:'xxxx'}
+      upload(data).then(res=>{
+        console.log(res)
+      })
     }
   }
 }

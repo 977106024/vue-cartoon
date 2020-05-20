@@ -15,16 +15,19 @@ export default {
     msg: String
   },
   created(){
-     const data = {image:'xxxx'}
-      upload(data).then(res=>{
-        console.log(res)
-      })
+    //  const data = {image:'xxxx'}
+    //   upload(data).then(res=>{
+    //     console.log(res)
+    //   })
   },
   methods:{
-    uploadImg(){
-      console.log('111')
-      const data = {image:'xxxx'}
-      upload(data).then(res=>{
+    uploadImg(e){
+      const file = e.target.files[0]
+      const formData = new FormData()
+      formData.append('photo',file)
+      console.log(formData)
+      const data = {image:formData}
+      upload(formData).then(res=>{
         console.log(res)
       })
     }

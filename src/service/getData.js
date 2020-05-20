@@ -24,8 +24,11 @@ axios.interceptors.request.use(function (config) {
 export const upload = (param) => (
     $axios({
         url:'http://cartoon.com/getCartoonPhoto',
-        method:'get',
-        params:param
+        method:'post',
+        data:param,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
     })
 )
 

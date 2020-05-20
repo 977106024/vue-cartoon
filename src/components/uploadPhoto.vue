@@ -16,7 +16,9 @@ export default {
   },
   created(){
      const data = {image:'xxxx'}
-      upload(data)
+      upload(data).then(res=>{
+        console.log(res)
+      })
   },
   methods:{
     uploadImg(){

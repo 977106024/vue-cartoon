@@ -22,10 +22,10 @@ axios.interceptors.request.use(function (config) {
 
 
 export const upload = (param) => (
-    axios({
+    $axios({
         url:'http://cartoon.com/getCartoonPhoto',
-        methods:'get',
-        data:param
+        method:'get',
+        params:param
     })
 )
 

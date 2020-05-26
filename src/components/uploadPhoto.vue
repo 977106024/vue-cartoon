@@ -23,7 +23,7 @@ export default {
       const formData = new FormData()
       formData.append('photo',file)
      
-      const data = {image:formData}
+      // const data = {image:formData}
       upload(formData).then(res=>{
         console.log(res)
       })

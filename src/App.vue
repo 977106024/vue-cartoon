@@ -7,6 +7,26 @@
     <router-view/>
   </div>
 </template>
+<script>
+import {login} from '@/service/getData'
+export default {
+  created(){
+    const data = {
+      email:'123@123.com',
+      password:'123456'
+    }
+    login(data).then(res=>{
+      if(res.status === 200){
+        let data = res.data
+        localStorage.setItem('TOKEN',data.access_token)
+        localStorage.setItem('TOKEN_TYPE',data.token_type)
+      }else {
+        alert('登录失败')
+      }
+    })
+  }
+} 
+</script>
 
 <style lang="scss">
 #app {

@@ -30,7 +30,7 @@ export default {
   data:() =>({
     reviewImg:'1111',
     selected:false,
-    imgStatus:null
+    imgUrl:null
   }),
   created(){
    
@@ -45,7 +45,7 @@ export default {
 
       upload(formData).then(res=>{
         if(res.status === 200){
-          this.imgStatus = res.data[0]
+          this.imgUrl = res.data[0]
         }
       })
     },
@@ -59,9 +59,10 @@ export default {
       };
     },
     submit(){
-      if(!this.imgStatus)return
-      let type = this.checked ? 'anime_mask' : 'anime'
+      if(!this.imgUrl)return
+      let type = Boolean(this.selected) ? 'anime_mask' : 'anime'
       const data = {
+        imgUrl:this.imgUrl,
         type:type,
         mask_id:Math.floor(Math.random()*8 +1)
       }

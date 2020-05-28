@@ -67,7 +67,9 @@ export default {
         mask_id:Math.floor(Math.random()*8 +1)
       }
       getCartoon(data).then(res=>{
-        console.log(data)
+        if(res.status === 200){
+            this.reviewImg = 'data:image/jpeg;base64,' + res.data.image
+        }
       })
     }
   }

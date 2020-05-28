@@ -14,14 +14,14 @@
      </section> 
 
      <section class="submit">
-       <button>确定</button>
+       <button @click="submit">确定</button>
      </section>
 
   </div>
 </template>
 
 <script>
-import {upload} from '@/service/getData'
+import {upload,getCartoon} from '@/service/getData'
 export default {
   name: 'uploadPhoto',
   props: {
@@ -29,7 +29,8 @@ export default {
   },
   data:() =>({
     reviewImg:'1111',
-    selected:false
+    selected:false,
+    imgStatus:null
   }),
   created(){
    
@@ -43,7 +44,9 @@ export default {
 
 
       upload(formData).then(res=>{
-        console.log(res)
+        if(res.status === 200){
+          this.imgStatus = res.data[0]
+        }
       })
     },
     preview(file){
@@ -54,6 +57,17 @@ export default {
          _this.reviewImg = this.result
         //  console.log(this.result)
       };
+    },
+    submit(){
+      if(!this.imgStatus)return
+      let type = this.checked ? 'anime_mask' : 'anime'
+      const data = {
+        type:type,
+        mask_id:Math.floor(Math.random()*8 +1)
+      }
+      getCartoon(data).then(res=>{
+        console.log(data)
+      })
     }
   }
 }

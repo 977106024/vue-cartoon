@@ -35,6 +35,14 @@ export const upload = (param) => (
     })
 )
 
+export const getCartoon = (param) => (
+  axios({
+      url:'http://cartoon.com/api/getCartoon',
+      method:'post',
+      data:param,
+  })
+)
+
 export const login = (param) => (
   axios({
       url:'http://cartoon.com/api/auth/login',

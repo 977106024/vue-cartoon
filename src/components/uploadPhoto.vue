@@ -33,7 +33,8 @@ export default {
     selected:false,
     imgUrl:null,
     success:false,
-    loading:false
+    loading:false,
+    id:null
   }),
   created(){
    
@@ -52,7 +53,8 @@ export default {
 
       upload(formData).then(res=>{
         if(res.status === 200){
-          this.imgUrl = res.data[0]
+          this.imgUrl = res.data.img
+          this.id = res.data.id
           this.loading = false
           this.success = true
         }
@@ -73,6 +75,7 @@ export default {
       if(!this.imgUrl)return
       let type = Boolean(this.selected) ? 'anime_mask' : 'anime'
       const data = {
+        id:this.id,
         imgUrl:this.imgUrl,
         type:type,
         mask_id:Math.floor(Math.random()*8 +1)

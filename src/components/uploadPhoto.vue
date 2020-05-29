@@ -14,7 +14,8 @@
      </section> 
 
      <section class="submit">
-       <button @click="submit">确定</button>
+       <button @click="submit" :class={show:success} :disabled="!success">确定</button>
+        <img class="loading" v-show="loading" src="@/assets/images/loading.gif" alt="">
      </section>
 
   </div>
@@ -30,13 +31,19 @@ export default {
   data:() =>({
     reviewImg:'1111',
     selected:false,
-    imgUrl:null
+    imgUrl:null,
+    success:false,
+    loading:false
   }),
   created(){
    
   },
   methods:{
     uploadImg(e){
+      //按钮和loading
+      this.loading = true
+      this.success = false
+
       const file = e.target.files[0]
       this.preview(file)
       const formData = new FormData()
@@ -46,19 +53,23 @@ export default {
       upload(formData).then(res=>{
         if(res.status === 200){
           this.imgUrl = res.data[0]
+          this.loading = false
+          this.success = true
         }
       })
     },
     preview(file){
+
        var reads = new FileReader()
        reads.readAsDataURL(file)
        let _this = this
        reads.onload = function(e) { //图片转成城base64
          _this.reviewImg = this.result
-        //  console.log(this.result)
       };
     },
     submit(){
+      this.loading = true
+
       if(!this.imgUrl)return
       let type = Boolean(this.selected) ? 'anime_mask' : 'anime'
       const data = {
@@ -69,9 +80,36 @@ export default {
       getCartoon(data).then(res=>{
         if(res.status === 200){
             this.reviewImg = 'data:image/jpeg;base64,' + res.data.image
+            this.loading = false
         }
       })
-    }
+    },
+     //图片预览
+    saveImg(val) {
+      let isWchatWeb = this.isWeiXin();
+      if (isWchatWeb) {
+        //微信图片预览
+        WeixinJSBridge.invoke("imagePreview", {
+          urls: this.imgArr,
+          current: val
+        });
+      } else {
+        this.imgUrl = val;
+        this.isSaveImg = true;
+      }
+    },
+    //是否为微信浏览器
+    isWeiXin() {
+      //window.navigator.userAgent属性包含了浏览器类型、版本、操作系统类型、浏览器引擎类型等信息，这个属性可以用来判断浏览器类型
+      var ua = window.navigator.userAgent.toLowerCase();
+      //通过正则表达式匹配ua中是否含有MicroMessenger字符串
+      if (ua.match(/MicroMessenger/i) == "micromessenger") {
+        return true;
+      } else {
+        return false;
+      }
+    },
+
   }
 }
 </script>
@@ -174,6 +212,7 @@ input[type="radio"]:checked:after {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   button{
     color: white;
     font-size: 15px;
@@ -181,7 +220,20 @@ input[type="radio"]:checked:after {
     padding:18px 50px;
     border: none;
     border-radius: 5px;
+    background: #eee;
+    // background: rgb(247, 181, 44);
+  }
+  button.show{
     background: rgb(247, 181, 44);
+  }
+  .loading{
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    padding-top: 10vh;
   }
 }
  

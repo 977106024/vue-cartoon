@@ -9,8 +9,10 @@
 </template>
 <script>
 import {login} from '@/service/getData'
+import Vconsole from 'vconsole'
 export default {
   created(){
+    new Vconsole()
     const data = {
       email:'123@123.com',
       password:'123456'

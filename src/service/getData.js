@@ -26,7 +26,7 @@ axios.interceptors.request.use(function (config) {
 
 export const upload = (param) => (
     axios({
-        url:'http://cartoon.com/api/upload',
+        url:'http://192.168.1.2/api/upload',
         method:'post',
         data:param,
         headers: {
@@ -37,7 +37,7 @@ export const upload = (param) => (
 
 export const getCartoon = (param) => (
   axios({
-      url:'http://cartoon.com/api/getCartoon',
+      url:'http://192.168.1.2/api/getCartoon',
       method:'post',
       data:param,
   })
@@ -45,7 +45,7 @@ export const getCartoon = (param) => (
 
 export const login = (param) => (
   axios({
-      url:'http://cartoon.com/api/auth/login',
+      url:'http://192.168.1.2/api/auth/login',
       method:'post',
       data:param,
   })

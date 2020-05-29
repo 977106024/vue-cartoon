@@ -5,7 +5,7 @@
         <use xlink:href="#icon-xiangji"></use>
      </svg>
      <input type="file" accept="image/*" @change="uploadImg">
-     <img class="preview" :src="reviewImg" alt="" >
+     <img class="preview" :src="reviewImg" alt="">
     </section>
 
      <section class="select">
@@ -83,33 +83,7 @@ export default {
             this.loading = false
         }
       })
-    },
-     //图片预览
-    saveImg(val) {
-      let isWchatWeb = this.isWeiXin();
-      if (isWchatWeb) {
-        //微信图片预览
-        WeixinJSBridge.invoke("imagePreview", {
-          urls: this.imgArr,
-          current: val
-        });
-      } else {
-        this.imgUrl = val;
-        this.isSaveImg = true;
-      }
-    },
-    //是否为微信浏览器
-    isWeiXin() {
-      //window.navigator.userAgent属性包含了浏览器类型、版本、操作系统类型、浏览器引擎类型等信息，这个属性可以用来判断浏览器类型
-      var ua = window.navigator.userAgent.toLowerCase();
-      //通过正则表达式匹配ua中是否含有MicroMessenger字符串
-      if (ua.match(/MicroMessenger/i) == "micromessenger") {
-        return true;
-      } else {
-        return false;
-      }
-    },
-
+    }
   }
 }
 </script>
@@ -158,7 +132,7 @@ a {
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: -1;
+    // z-index: -1;
   }
 }
 

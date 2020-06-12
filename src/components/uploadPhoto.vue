@@ -82,7 +82,7 @@ export default {
       }
       getCartoon(data).then(res=>{
         if(res.status === 200){
-            this.reviewImg = 'data:image/jpeg;base64,' + res.data.image
+            this.reviewImg = res.data.img
             this.loading = false
         }
       })

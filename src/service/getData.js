@@ -22,11 +22,12 @@ axios.interceptors.request.use(function (config) {
   //       }
   //     }]
   //   })
-
+const alpha = 'http://localhost:81'
+const master= 'http://'
 
 export const upload = (param) => (
     axios({
-        url:'http://192.168.1.2/api/upload',
+        url:master+ '/api/upload',
         method:'post',
         data:param,
         headers: {
@@ -37,7 +38,7 @@ export const upload = (param) => (
 
 export const getCartoon = (param) => (
   axios({
-      url:'http://192.168.1.2/api/getCartoon',
+      url:master+ '/api/getCartoon',
       method:'post',
       data:param,
   })
@@ -45,7 +46,7 @@ export const getCartoon = (param) => (
 
 export const login = (param) => (
   axios({
-      url:'http://192.168.1.2/api/auth/login',
+      url:master+ '/api/auth/login',
       method:'post',
       data:param,
   })

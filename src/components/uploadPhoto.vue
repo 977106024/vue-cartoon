@@ -1,5 +1,14 @@
 <template>
   <div class="uploadPhoto">
+    <header>
+      <h1>照片生成动漫图</h1>
+    </header>
+
+    <section class="tip">
+       <p>长按图片可保存本地</p>
+       <p :class={tipText:colorChange}>←点击相机上传照片</p>
+    </section>
+    
     <section class="upload">
       <svg class="icon camera" aria-hidden="true">
         <use xlink:href="#icon-xiangji"></use>
@@ -15,7 +24,10 @@
 
      <section class="submit">
        <button @click="submit" :class={show:success} :disabled="!success">确定</button>
-        <img class="loading" v-show="loading" src="@/assets/images/loading.gif" alt="">
+       <div class="loading"  v-show="loading">
+          <img src="@/assets/images/loading.gif" alt="">
+          <span>{{lodingMsg}}</span>
+       </div>
      </section>
 
   </div>
@@ -36,15 +48,27 @@ export default {
     success:false,
     loading:false,
     id:null,
+    lodingMsg:'上传图片中...',
+    colorChange:true,
+    setIntervalId:null
   }),
   created(){
    
+  },
+  mounted(){
+    this.setIntervalId = setInterval(() => {
+      this.colorChange = !this.colorChange
+    },500)
+  },
+  destroyed(){
+    clearInterval(this.setIntervalId)
   },
   methods:{
     uploadImg(e){
       //按钮和loading
       this.loading = true
       this.success = false
+      this.lodingMsg = '图片上传中...'
 
       const file = e.target.files[0]
       this.imgPreview(file,(formData)=>{
@@ -77,6 +101,8 @@ export default {
     },
     submit(){
       this.loading = true
+      this.success = false
+      this.lodingMsg = '图片生成中...'
 
       if(!this.imgUrl)return
       let type = Boolean(this.selected) ? 'anime_mask' : 'anime'
@@ -89,7 +115,11 @@ export default {
       getCartoon(data).then(res=>{
         if(res.status === 200){
             this.reviewImg = res.data.img
-            this.loading = false
+
+            setTimeout(()=>{
+              this.loading = false
+              this.success = true
+            },6000)
         }
       })
     },
@@ -111,12 +141,12 @@ export default {
 
         // 读取成功后的回调
         reader.onloadend = function () {
-          console.log('==this.result===', this.result)
+          // console.log('==this.result===', this.result)
           const result = this.result
           img.src = result
           img.onload = function () {
-            console.log('===Orientation===', Orientation)
-            console.log('===img===', img)
+            // console.log('===Orientation===', Orientation)
+            // console.log('===img===', img)
             const data = that.compress(img, 0.7, Orientation)
             const blob = that.dataURItoBlob(data)
             const formData = new FormData()
@@ -137,8 +167,8 @@ export default {
 compress (img, compressNum, Orientation) {
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
-  const width = img.width
-  const height = img.height
+  const width = img.width / 1.94
+  const height = img.height /1.94
   canvas.width = width
   canvas.height = height
   // 铺底色
@@ -195,6 +225,9 @@ dataURItoBlob (base64Data) {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+h1{
+  background: rgb(247, 181, 44);
+}
 .uploadPhoto{
   // padding-top: 10vh;
   position: relative;
@@ -202,7 +235,7 @@ dataURItoBlob (base64Data) {
     width: 4em;
     height: 4em;
     position: absolute;
-    top: 10.5vh;
+    top: 14.5vh;
     left: 50%;
     transform:translateX(-50%);
     opacity: 0;
@@ -216,22 +249,22 @@ a {
   width: 4em;
   height: 4em;
   position: absolute;
-  top: 10vh;
+  top: 14vh;
   left: 50%;
   transform:translateX(-50%);
   z-index: 98;
 }
 
 .upload{
-  height: 30vh;
-  width: 60vw;
+  height: 40vh;
+  width: 70vw;
   margin: 5vh auto;
   border: 5px solid #ccc;
   border-radius: 15px;
   position: relative;
   .preview{
-    width: 60vw;
-    height:30vh;
+     height:40vh;
+    width: 70vw;
     position: absolute;
     top: 0;
     left: 0;
@@ -306,15 +339,40 @@ input[type="radio"]:checked:after {
     background: rgb(247, 181, 44);
   }
   .loading{
-    width: 35px;
-    height: 35px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
     padding-top: 10vh;
   }
+  .loading > img{
+    width: 35px;
+    height: 35px;
+    vertical-align: middle;
+  }
+  .loading > span{
+    color: rgb(247, 181, 44);
+  }
 }
+.tip{
+    font-size: 12px;
+    padding-top: 15px;
+    margin-bottom: -25px;
+    width: 90%;
+    padding: 0 5%;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 20%;
+    // transform:translateY(-50%);
+    left: 0;
+    p{
+      width: 20px;
+    }
+    .tipText{
+      color: red;
+    }
+  }
  
 
 </style>

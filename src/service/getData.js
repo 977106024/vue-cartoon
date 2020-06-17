@@ -23,7 +23,7 @@ axios.interceptors.request.use(function (config) {
   //     }]
   //   })
 const alpha = 'http://localhost:81'
-const master= 'http://api2.xuewuzhijing.top'
+const master= ''
 
 export const upload = (param) => (
     axios({

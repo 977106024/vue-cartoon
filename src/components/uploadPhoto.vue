@@ -226,7 +226,7 @@ dataURItoBlob (base64Data) {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 h1{
-  padding-top: 15px;
+  padding-top: 22px;
   color: rgb(247, 181, 44);
 }
 .uploadPhoto{
@@ -261,6 +261,7 @@ a {
   height: 40vh;
   width: 70vw;
   margin: 5vh auto;
+  margin-top: 3vh;
   border: 5px solid #ccc;
   border-radius: 15px;
   position: relative;
@@ -273,6 +274,7 @@ a {
     right: 0;
     bottom: 0;
     background: white;
+    border-radius: 10px;
     // z-index: -1;
   }
 }
@@ -298,6 +300,7 @@ section.select {
     position: absolute;
     width: 0;
     height: 0;
+    margin-top: 3px;
 }
  
 input[type="radio"]:after {
